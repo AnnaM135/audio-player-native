@@ -1,7 +1,6 @@
-import { View, Image, TouchableOpacity } from "react-native";
+import { View, Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import backIcon from "./assets/images/icons/backArrow.png";
 import ellipseIcon from "./assets/images/icons/Ellipses.png";
 
 // views
@@ -10,23 +9,11 @@ import SignUp from "./views/SignUp";
 import SignIn from "./views/SignIn";
 import AddTodo from "./views/AddTodo";
 import AllTodos from "./views/AllTodos";
+import BackButton from "./components/BackButton";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
-  const BackButton = ({ navigation }) => {
-    const handlePress = () => {
-      navigation.goBack();
-    };
-  
-    return (
-      <TouchableOpacity onPress={handlePress} style={{ marginLeft: 16 }}>
-        <Image
-          source={backIcon}
-          style={{ width: 30, height: 30 }}
-        />
-      </TouchableOpacity>
-    );
-  };
+
   const CircleIcon = () => {
     return (
       <View
@@ -43,16 +30,18 @@ export default function App() {
       </View>
     );
   };
+
+  const screenOptions = {
+    headerTitle: "",
+    headerTransparent: true,
+    headerBackTitleVisible: false,
+    headerRight: () => <CircleIcon />,
+  };
+
+
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerTitle: "",
-          headerTransparent: true,
-          headerBackTitleVisible: false,
-          headerRight: () => <CircleIcon />,
-        }}
-      >
+      <Stack.Navigator screenOptions={screenOptions}>
         <Stack.Screen
           name="GetStarted"
           component={GetStarted}

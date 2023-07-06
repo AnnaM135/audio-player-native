@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View, Button, Image } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CustomButton from "../components/CustomButton.js";
 import GetStartedImg from "../assets/images/getStarted.png";
+import PageTitle from "../components/PageTitle.js";
 
 export default function GetStarted() {
   const navigation = useNavigation();
@@ -11,6 +12,7 @@ export default function GetStarted() {
 
     </View>
       <Image source={GetStartedImg} />
+      <PageTitle title="Get things done with ToDo"/>
       <Text style={styles.title}>Get things done with ToDo</Text>
       <Text style={styles.text}>
           Lorem ipsum dolor sit amet,
@@ -30,12 +32,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: '100%',
     paddingTop: 80
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 500,
-    color: '#000',
-    marginTop: 40,
   },
   text: {
     maxWidth: 250,
