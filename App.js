@@ -1,7 +1,8 @@
-import { View } from "react-native";
+import { View, Image, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { FontAwesome5 } from '@expo/vector-icons';
+import backIcon from "./assets/images/icons/backArrow.png";
+import ellipseIcon from "./assets/images/icons/Ellipses.png";
 
 // views
 import GetStarted from "./views/GetStarted";
@@ -12,7 +13,36 @@ import AllTodos from "./views/AllTodos";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
-
+  const BackButton = ({ navigation }) => {
+    const handlePress = () => {
+      navigation.goBack();
+    };
+  
+    return (
+      <TouchableOpacity onPress={handlePress} style={{ marginLeft: 16 }}>
+        <Image
+          source={backIcon}
+          style={{ width: 30, height: 30 }}
+        />
+      </TouchableOpacity>
+    );
+  };
+  const CircleIcon = () => {
+    return (
+      <View
+        style={{
+          position: "absolute",
+          top: 0,
+          left: -400,
+          zIndex: 999,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Image source={ellipseIcon} style={{ width: 100, height: 100 }} />
+      </View>
+    );
+  };
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -20,20 +50,35 @@ export default function App() {
           headerTitle: "",
           headerTransparent: true,
           headerBackTitleVisible: false,
-          headerBackImage: () => (
-             <FontAwesome5 name="arrow-alt-circle-left" size={24} color="#000" />
-          ),
+          headerRight: () => <CircleIcon />,
         }}
-
       >
         <Stack.Screen
           name="GetStarted"
           component={GetStarted}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen name="SignIn" component={SignIn} />
-        <Stack.Screen name="AddTodo" component={AddTodo} />
+        <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+          options={({ navigation }) => ({
+            headerLeft: () => <BackButton navigation={navigation} />,
+          })}
+        />
+        <Stack.Screen
+          name="SignIn"
+          component={SignIn}
+          options={({ navigation }) => ({
+            headerLeft: () => <BackButton navigation={navigation} />,
+          })}
+        />
+        <Stack.Screen
+          name="AddTodo"
+          component={AddTodo}
+          options={({ navigation }) => ({
+            headerLeft: () => <BackButton navigation={navigation} />,
+          })}
+        />
         <Stack.Screen
           name="AllTodo"
           component={AllTodos}

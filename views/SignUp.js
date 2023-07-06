@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import CustomButton from "../components/CustomButton.js";
 
 export default function SignUp() {
   const navigation = useNavigation();
@@ -7,10 +8,9 @@ export default function SignUp() {
   return (
     <View style={styles.container}>
       <Text>Sign Up</Text>
-      <Button
-        title="Sign Up"
-        color="#55847A"
+      <CustomButton
         onPress={() => navigation.navigate("SignIn")}
+        title="Sign Up"
       />
     </View>
   );
@@ -21,6 +21,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-around",
-    height: '100%',
+    height: "100%",
   },
 });
