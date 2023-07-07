@@ -7,7 +7,7 @@ const BackButton = ({ navigation }) => {
   };
 
   return (
-    <TouchableOpacity onPress={handlePress} style={{ marginLeft: 16 }}>
+    <TouchableOpacity onPress={handlePress} style={{ marginLeft: -5, }}>
       <Image source={backIcon} style={{ width: 30, height: 30 }} />
     </TouchableOpacity>
   );

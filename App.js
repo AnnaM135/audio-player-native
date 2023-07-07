@@ -1,4 +1,4 @@
-import { View, Image } from "react-native";
+import { View, Image, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ellipseIcon from "./assets/images/icons/Ellipses.png";
@@ -14,30 +14,11 @@ import BackButton from "./components/BackButton";
 export default function App() {
   const Stack = createNativeStackNavigator();
 
-  const CircleIcon = () => {
-    return (
-      <View
-        style={{
-          position: "absolute",
-          top: 0,
-          left: -400,
-          zIndex: 999,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Image source={ellipseIcon} style={{ width: 100, height: 100 }} />
-      </View>
-    );
-  };
-
   const screenOptions = {
     headerTitle: "",
     headerTransparent: true,
     headerBackTitleVisible: false,
-    headerRight: () => <CircleIcon />,
   };
-
 
   return (
     <NavigationContainer>
@@ -45,13 +26,42 @@ export default function App() {
         <Stack.Screen
           name="GetStarted"
           component={GetStarted}
-          options={{ headerShown: false }}
+          options={() => ({
+            headerBackground: () => (
+              <Image
+                source={ellipseIcon}
+                style={{
+                  flex: 1,
+                  resizeMode: "cover",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: 160,
+                  height: "100%",
+                }}
+              />
+            ),
+          })}
         />
         <Stack.Screen
           name="SignUp"
           component={SignUp}
           options={({ navigation }) => ({
             headerLeft: () => <BackButton navigation={navigation} />,
+            headerBackground: () => (
+              <Image
+                source={ellipseIcon}
+                style={{
+                  flex: 1,
+                  resizeMode: "cover",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: 160,
+                  height: "100%",
+                }}
+              />
+            ),
           })}
         />
         <Stack.Screen
@@ -59,6 +69,20 @@ export default function App() {
           component={SignIn}
           options={({ navigation }) => ({
             headerLeft: () => <BackButton navigation={navigation} />,
+            headerBackground: () => (
+              <Image
+                source={ellipseIcon}
+                style={{
+                  flex: 1,
+                  resizeMode: "cover",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: 160,
+                  height: "100%",
+                }}
+              />
+            ),
           })}
         />
         <Stack.Screen
@@ -66,12 +90,42 @@ export default function App() {
           component={AddTodo}
           options={({ navigation }) => ({
             headerLeft: () => <BackButton navigation={navigation} />,
+            headerBackground: () => (
+              <Image
+                source={ellipseIcon}
+                style={{
+                  flex: 1,
+                  resizeMode: "cover",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: 160,
+                  height: "100%",
+                }}
+              />
+            ),
           })}
         />
         <Stack.Screen
           name="AllTodo"
           component={AllTodos}
-          options={{ headerShown: false }}
+          options={() => ({
+            headerLeft: () => <Text />,
+            headerBackground: () => (
+              <Image
+                source={ellipseIcon}
+                style={{
+                  flex: 1,
+                  resizeMode: "cover",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: 160,
+                  height: "100%",
+                }}
+              />
+            ),
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>

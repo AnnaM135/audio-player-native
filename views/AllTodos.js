@@ -1,24 +1,45 @@
+import { useState } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import WomanBicycleImg from "../assets/images/womanBicycle.png";
-import PageTitle from "../components/PageTitle";
 import { Ionicons } from "@expo/vector-icons";
+import WomanBicycleImg from "../assets/images/womanBicycle.png";
+import PeopleImg from "../assets/images/peopleAccount.jpg";
 
 export default function AllTodos() {
   const navigation = useNavigation();
+  const taskData = [
+    "Follow Oluwafisayomi.dev on Twitter.",
+    "Learn Figma by 4pm.",
+    "Coding at 9am.",
+    "Watch Mr Beasts Videos.",
+  ];
+  const [tasks, setTasks] = useState([]);
+
+  const pickTask = (selectedTask) => {
+    if (tasks.includes(selectedTask)) {
+      setTasks(tasks.filter((task) => task !== selectedTask));
+      return;
+    }
+    setTasks((tasks) => tasks.concat(selectedTask));
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.accountHeader}>
-        <PageTitle title="Welcome Fisayomi" />
+        <View style={styles.profilePicture}>
+          <Image style={styles.personImg} source={PeopleImg} />
+        </View>
+        <Text style={styles.title}>Welcome Name</Text>
         <TouchableOpacity
           style={styles.logout}
           onPress={() => navigation.navigate("GetStarted")}
         >
-          <Text>Log out</Text>
+          <Text style={{fontSize: 13}}>Log out</Text>
         </TouchableOpacity>
       </View>
-      <Image source={WomanBicycleImg} />
+      <View style={{ width: 200, height: 250 }}>
+        <Image style={{ width: '100%', height: '100%', objectFit: 'cover' }} source={WomanBicycleImg} />
+      </View>
       <View style={styles.taskContainer}>
         <Text title="Todo Tasks" style={styles.title}>
           Todo Tasks.
@@ -26,23 +47,30 @@ export default function AllTodos() {
         <View style={styles.taskContainerBody}>
           <View style={styles.taskContainerHeader}>
             <Text style={styles.taskType}>Daily Tasks.</Text>
-            <Ionicons name="add-circle" size={32} color="black" />
+            <TouchableOpacity onPress={() => {navigation.navigate("AddTodo")}}>
+              <Ionicons name="add-circle" size={32} color="black" />
+            </TouchableOpacity>
           </View>
           <View style={styles.taskList}>
-            <View style={styles.checkboxContainer}>
-              <Text style={styles.todo}>
-                Follow Oluwafisayomi.dev on Twitter.
-              </Text>
-            </View>
-            <View>
-              <Text>Learn Figma by 4pm.</Text>
-            </View>
-            <View>
-              <Text>Coding at 9am.</Text>
-            </View>
-            <View>
-              <Text>Watch Mr Beasts Videos.</Text>
-            </View>
+            {taskData.map((option, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.checkboxContainer}
+                onPress={() => pickTask(option)}
+              >
+                <TouchableOpacity
+                  style={[
+                    styles.checkbox,
+                    {
+                      backgroundColor: tasks.includes(option)
+                        ? "rgba(85, 132, 122, 0.80)"
+                        : undefined,
+                    },
+                  ]}
+                ></TouchableOpacity>
+                <Text style={styles.todo}>{option}</Text>
+              </TouchableOpacity>
+            ))}
           </View>
         </View>
       </View>
@@ -58,21 +86,35 @@ const styles = StyleSheet.create({
   },
   accountHeader: {
     width: "100%",
-    height: 200,
-    paddingVertical: 60,
+    height: 230,
+    paddingTop: 70,
     flexDirection: "column",
     alignItems: "center",
-    backgroundColor: "#55847A",
-    borderBottomLeftRadius: 200,
-    borderBottomRightRadius: 200,
+    backgroundColor: "rgba(85, 132, 122, 0.70)",
+    borderBottomLeftRadius: 180,
+    borderBottomRightRadius: 180,
     transform: "scale(1.3)",
+  },
+  profilePicture: {
+    width: 80,
+    height: 80,
+    borderRadius: 50,
+    borderWidth: 3,
+    borderColor: 'rgba(85, 132, 122, 0.97)',
+    padding: 3
+  },
+  personImg: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    borderRadius: 50,
   },
   logout: {
     marginTop: 10,
-    backgroundColor: "#C0C0C0",
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    borderRadius: 5,
+    backgroundColor: 'rgba(85, 132, 122, 0.60)',
+    paddingBottom: 2,
+    paddingHorizontal: 10,
+    borderRadius: 20,
   },
   taskContainer: {
     width: "100%",
@@ -104,5 +146,21 @@ const styles = StyleSheet.create({
   taskList: {
     flexDirection: "column",
     rowGap: 20,
+  },
+  checkboxContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  checkbox: {
+    width: 17,
+    height: 17,
+    borderColor: "#000",
+    borderWidth: 2,
+    marginRight: 10,
+  },
+  todo: {
+    color: "#000",
+    fontSize: 16,
+    fontWeight: 500,
   },
 });
